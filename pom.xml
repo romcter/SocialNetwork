@@ -27,6 +27,10 @@
         </plugins>
     </build>
 
+    <properties>
+        <java.version>14</java.version>
+    </properties>
+
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
