@@ -1,0 +1,119 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Priman</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<div align="center">
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+        <a class="navbar-brand" href="/">Welcome page</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="/people">All people</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/music" th:text="${'My music '+currentUser.getMusic().size()}">My
+                        music</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/image" th:text="${'My images '+currentUser.getImages().size()}">My
+                        images</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/video" th:text="${'My video '+currentUser.getVideos().size()}">My
+                        video</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/friends" th:text="${'My friends '+currentUser.getFriends().size()}">My
+                        video</a>
+                </li>
+                <li th:if="${currentUser.getRole().getAuthority() == 'ROLE_ADMIN'}" class="nav-item active">
+                    <a class="nav-link" href="/admin">ADMIN PAGE</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/settingUser">Seting</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0" action="/findByName" method="get">
+                <input class="form-control mr-sm-2" name="nameThatNeedFind" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search people</button>
+            </form>
+        </div>
+    </nav>
+    <div align="center">
+        <div>
+            <a th:if="${userWhomVisit.getMainPhoto()}"><img th:src="@{${userWhomVisit.getMainPhoto()}}"
+                                                            height="180"></a>
+            <a th:unless="${userWhomVisit.getMainPhoto()}"><img src="/img/avatarka-pustaya-vk_0.jpg" height="180"></a>
+        </div>
+        <p th:text="${userWhomVisit.getName()}"></p>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col">
+                    <div align="center">
+                        <p>Image</p>
+                        <div th:each="image : ${userWhomVisit.getImages()}">
+                            <div>
+                                <img th:src="@{'/img/'+${image}}" height="180">
+                            </div>
+                            <a th:if="${!currentUser.getImages().contains(image)}"
+                               th:href="@{'/ad/addImage/'+${image}+'/'+${userWhomVisit.getId()}}">Add
+                                this image</a>
+                            <a th:unless="${!currentUser.getImages().contains(image)}"
+                               th:href="@{'/ad/deleteImage/'+${image}+'/'+${userWhomVisit.getId()}}">Delete
+                                this image</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div align="center">
+                        <p>Video</p>
+                        <div th:each="video : ${userWhomVisit.getVideos()}">
+                            <div>
+                                <video th:src="@{'/img/'+${video}}" controls height="180"/>
+                            </div>
+                            <div>
+                                <a th:if="${!currentUser.getVideos().contains(video)}"
+                                   th:href="@{'/ad/addVideo/'+${video}+'/'+${userWhomVisit.getId()}}">Add
+                                    this video</a>
+                                <a th:unless="${!currentUser.getVideos().contains(video)}"
+                                   th:href="@{'/ad/deleteVideo/'+${video}+'/'+${userWhomVisit.getId()}}">Delete
+                                    this video</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div align="center">
+                        <p>Audio</p>
+                        <div th:each="music : ${userWhomVisit.getMusic()}">
+                            <div>
+                                <audio th:src="@{'/img/'+${music}}" controls/>
+                            </div>
+                            <div>
+                                <a th:if="${!currentUser.getMusic().contains(music)}"
+                                   th:href="@{'/ad/addMusic/'+${music}+'/'+${userWhomVisit.getId()}}">Add
+                                    this music</a>
+                                <a th:unless="${!currentUser.getMusic().contains(music)}"
+                                   th:href="@{'/ad/deleteMusic/'+${music}+'/'+${userWhomVisit.getId()}}">Delete
+                                    this music</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

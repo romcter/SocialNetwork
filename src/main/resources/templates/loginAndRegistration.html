@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>Login in Priman</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/css/login.css">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+
+            <div class="tab" role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab"
+                                                              data-toggle="tab">sign in</a></li>
+                    <li role="presentation"><a href="#Section2" aria-controls="profile" role="tab" data-toggle="tab">sign
+                        up</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content tabs">
+                    <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+                        <form class="form-horizontal" action="/j_spring_security_check" method="post">
+                            <div class="form-group">
+                                <label th:if="${successActivate}" class="form-group"><h2>Autorization will be success.
+                                    Visit your Gmail and check letter from our site</h2></label>
+                                <label th:if="${failActivate}" class="form-group"><h2>Something happening and your
+                                    account don't activate. Try again </h2></label>
+                                <label th:if="${successAuth}" class="form-group"><h2>Autorization will be success. Visit
+                                    your Gmail and check letter from our site</h2></label>
+                                <label th:if="${successChangePass}" class="form-group"><h2>Password was be successful
+                                    change</h2></label>
+                                <label th:if="${successfulRecovery}" class="form-group"><h2>The link was be success to
+                                    send in your
+                                    email.</h2></label>
+                                <label th:if="${emailEr}" class="form-group"><h2>This email is occupied</h2></label>
+                                <label th:if="${userEmpty}" class="form-group"><h2>Login or password wrong</h2></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">username</label>
+                                <input name="j_login" type="email" class="form-control" id="exampleInputEmail1">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input name="j_password" type="password" class="form-control"
+                                       id="exampleInputPassword1">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-default">Sign in</button>
+                            </div>
+                            <div class="form-group forgot-pass">
+                                <a href="/passwordRecovery" class="btn btn-default">forgot password</a>
+                            </div>
+                            <div class="form-group forgot-pass">
+                                <a href="/accountRecovery" class="btn btn-default">Restore access to deleted account</a>
+                            </div>
+                            <div class="form-group forgot-pass">
+                                <a href="/oauth2/authorization/google" class="btn btn-default">Log in with Google <img
+                                        class="round"
+                                        src="https://lh3.googleusercontent.com/DKoidc0T3T1KvYC2stChcX9zwmjKj1pgmg3hXzGBDQXM8RG_7JjgiuS0CLOh8DUa7as"
+                                        height="20"/></a>
+                            </div>
+                        </form>
+                    </div>
+                    <div role="tabpanel" class="tab-pane fade" id="Section2">
+                        <form class="form-horizontal" action="/registration" method="post">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">First Name</label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" name="name">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Login</label>
+                                <input type="email" class="form-control" id="exampleInputEmail1" name="email"
+                                       placeholder="some@some.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" class="form-control" id="exampleInputPassword1" name="password">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-default">Sign up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
