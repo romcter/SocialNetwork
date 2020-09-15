@@ -17,7 +17,7 @@ public class WelcomeController {
     @Autowired
     private MyUserImpl myUserImpl;
 
-    @GetMapping("/")
+    @GetMapping("/welcome")
     public String mainPage(Model model) {
         MyUser currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
