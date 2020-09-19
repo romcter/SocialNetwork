@@ -53,11 +53,21 @@ public class FriendController {
         return "userWhomVisitPage";
     }
     @GetMapping("/findByName")
-    public String findByName(@RequestParam(name = "nameThatNeedFind") String name,Model model){
+    public String findByName(@RequestParam(name = "nameThatNeedFind") String name,
+                             Model model){
         model.addAttribute("usersThatFindByName", myUserImpl.findUsersByName(name));
         model.addAttribute("currentUser", getCurrentUser());
         return "findByName";
     }
+    @GetMapping("/people")
+    public String searchPeople(Model model){
+        Iterable<MyUser> users = myUserImpl.findAll();
+        MyUser currentUser = getCurrentUser();
+        model.addAttribute("currentUser", currentUser);
+        model.addAttribute("users", users);
+        return "allPeople";
+    }
+
 
     private MyUser getCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

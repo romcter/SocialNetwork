@@ -31,6 +31,8 @@ public class AdminController {
         model.addAttribute("allUser", myUserImpl.findAll());
         return "admin";
     }
+
+
     private MyUser getCurrentUser(){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();

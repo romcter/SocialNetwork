@@ -40,7 +40,7 @@ public class AppConfig extends GlobalMethodSecurityConfiguration {
         MyUser user = new MyUser.Builder()
                 .name(USER)
                 .password(encoder.encode("1"))
-                .role(MyUser.Role.BANNED)
+                .role(MyUser.Role.USER)
                 .state(MyUser.State.ACTIVE)
                 .registrationDate(new Date())
                 .email("1@1.1")

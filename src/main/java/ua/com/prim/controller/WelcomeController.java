@@ -17,7 +17,7 @@ public class WelcomeController {
     @Autowired
     private MyUserImpl myUserImpl;
 
-    @GetMapping("/welcome")
+    @GetMapping("/")
     public String mainPage(Model model) {
         MyUser currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
@@ -79,6 +79,8 @@ public class WelcomeController {
         model.addAttribute("currentUser", getCurrentUser());
         return "unauthorized";
     }
+
+
     private MyUser getCurrentUser(){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         return myUserImpl.findByLogin(loggedInUser.getName());

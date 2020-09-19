@@ -5,7 +5,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import ua.com.prim.config.PasswordGenerator;
 import ua.com.prim.dto.MyUserDto;
 import ua.com.prim.entity.MyUser;
 import ua.com.prim.repository.MyUserRepository;
@@ -68,24 +67,24 @@ public class MyUserImpl implements MyUserService {
     @Override
     public void addAndDeleteMusic(String actionThatNeedToDo, String musicNameForWork) {
         MyUser currentUser = getCurrentUser();
-        if (actionThatNeedToDo.equals("add")) currentUser.addToMusic(musicNameForWork);
-        else currentUser.deleteToMusic(musicNameForWork);
+        if (actionThatNeedToDo.equals("add")) currentUser.getMusic().add(musicNameForWork);
+        else currentUser.getMusic().remove(musicNameForWork);
         myUserRepository.save(currentUser);
     }
 
     @Override
     public void addAndDeleteImage(String actionThatNeedToDo, String imageNameForWork) {
         MyUser currentUser = getCurrentUser();
-        if (actionThatNeedToDo.equals("add")) currentUser.addToImage(imageNameForWork);
-        else currentUser.deleteToImage(imageNameForWork);
+        if (actionThatNeedToDo.equals("add")) currentUser.getImages().add(imageNameForWork);
+        else currentUser.getImages().remove(imageNameForWork);
         myUserRepository.save(currentUser);
     }
 
     @Override
     public void addAndDeleteVideo(String actionThatNeedToDo, String videoNameForWork) {
         MyUser currentUser = getCurrentUser();
-        if (actionThatNeedToDo.equals("add")) currentUser.addToVideo(videoNameForWork);
-        else currentUser.deleteToVideo(videoNameForWork);
+        if (actionThatNeedToDo.equals("add")) currentUser.getVideos().add(videoNameForWork);
+        else currentUser.getVideos().remove(videoNameForWork);
         myUserRepository.save(currentUser);
     }
 
@@ -95,10 +94,10 @@ public class MyUserImpl implements MyUserService {
         Optional<MyUser> userWithWhomToWork = myUserRepository.findById(userIdForWork);
         if (whatNeedToDo.equals("add")) {
             currentUser.getFriends().add(userWithWhomToWork.get());
-            userWithWhomToWork.get().addToFriend(currentUser);
+            userWithWhomToWork.get().getFriends().add(currentUser);
         } else {
-            currentUser.deleteToFriend(userWithWhomToWork.get());
-            userWithWhomToWork.get().deleteToFriend(currentUser);
+            currentUser.getFriends().remove(userWithWhomToWork.get());
+            userWithWhomToWork.get().getFriends().remove(currentUser);
         }
         myUserRepository.save(currentUser);
         myUserRepository.save(userWithWhomToWork.get());

@@ -33,7 +33,7 @@ public class PasswordRecoveryController {
     }
     @GetMapping("/passwordRecovery/{activationCode}")
     public String activationCode(
-            @PathVariable("activationCode")String activationCode,
+            @PathVariable String activationCode,
             Model model){
         MyUser currentUser = myUserImpl.findByActivationCode(activationCode);
         if(currentUser.getActivationCode().equals(activationCode)){
@@ -44,7 +44,7 @@ public class PasswordRecoveryController {
         return "passwordRecovery";
     }
     @PostMapping("/passwordRecovery/{userIdWhomNeedToChangePassword}")
-    public String changePassword(@PathVariable("userIdWhomNeedToChangePassword")Long userIdWhomNeedToChangePassword,
+    public String changePassword(@PathVariable Long userIdWhomNeedToChangePassword,
                                  @RequestParam("newPassword")String newPassword,
                                  Model model){
         if(myUserImpl.changePassword(userIdWhomNeedToChangePassword, newPassword)){

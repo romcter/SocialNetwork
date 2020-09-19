@@ -49,18 +49,6 @@ public class MyUser {
             inverseJoinColumns = {@JoinColumn(name = "friends_ID")})
     private List<MyUser> friends = new ArrayList<>();
 
-    public void addToFriend(MyUser userWhomWantToAdd) {
-        friends.add(userWhomWantToAdd);
-    }
-    public void addToMusic(String musicThatWantToAdd){music.add(musicThatWantToAdd);}
-    public void addToImage(String imageThatWantToAdd){images.add(imageThatWantToAdd);}
-    public void addToVideo(String videoThatWantToAdd){videos.add(videoThatWantToAdd);}
-    public void deleteToFriend(MyUser userWhomWantToDelete) { friends.remove(userWhomWantToDelete); }
-    public void deleteToMusic(String musicThatWantToDelete){music.remove(musicThatWantToDelete);}
-    public void deleteToImage(String imageThatWantToDelete){images.remove(imageThatWantToDelete);}
-    public void deleteToVideo(String videoThatWantToDelete){videos.remove(videoThatWantToDelete);}
-
-
     public enum Role implements GrantedAuthority {
         USER, ADMIN, DELETE, BANNED;
 
@@ -195,8 +183,5 @@ public class MyUser {
     }
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
-    }
-
-    public MyUser() {
     }
 }

@@ -1,4 +1,4 @@
-package ua.com.prim.model;
+package ua.com.prim.entity;
 
 public class ChatMessage {
 

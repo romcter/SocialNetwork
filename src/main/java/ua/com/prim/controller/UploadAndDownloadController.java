@@ -40,9 +40,9 @@ public class UploadAndDownloadController {
             String resultFileName = uuidFile + "." + file.getOriginalFilename();
             try {
                 file.transferTo(new File(uploadPath + resultFileName));
-                if (type.equals("music")) currentUser.addToMusic(resultFileName);
-                if (type.equals("video")) currentUser.addToVideo(resultFileName);
-                if (type.equals("image")) currentUser.addToImage(resultFileName);
+                if (type.equals("music")) currentUser.getMusic().add(resultFileName);
+                if (type.equals("video")) currentUser.getVideos().add(resultFileName);
+                if (type.equals("image")) currentUser.getImages().add(resultFileName);
                 if (type.equals("mainPage") || type.equals("settingUser")) currentUser.setMainPhoto("/img/" + resultFileName);
                 myUserImpl.save(currentUser);
             } catch (IOException e) {
