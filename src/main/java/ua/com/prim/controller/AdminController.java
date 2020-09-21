@@ -32,7 +32,6 @@ public class AdminController {
         return "admin";
     }
 
-
     private MyUser getCurrentUser(){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();

@@ -17,54 +17,63 @@ public class FriendController {
     @Autowired
     private MyUserImpl myUserImpl;
 
+
     @GetMapping("/friends")
-    public String myFriends(Model model){
+    public String returnFriendPage (Model model){
         MyUser currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
         return "friend";
     }
-    @GetMapping("/friends/{whatNeedToDo}/{userId}/{page}")
-    public String addAndDeleteFriends(
-            @PathVariable(value = "whatNeedToDo", required = false, name = "whatNeedToDo")String whatNeedToDo,
-            @PathVariable(value = "userId", required = false, name = "userId")Long userIdForWork,
-            @PathVariable(value = "page", required = false, name = "page")String pageThatNeedToReturn,
-            Model model){
-        myUserImpl.addAndDeleteFriends(whatNeedToDo, userIdForWork);
-        Iterable<MyUser> users = myUserImpl.findAll();
+
+    @GetMapping("/friends/{addOrDeleteFriend}/{userIdForWork}/{pageThatNeedToReturn}")
+    public String addOrDeleteFriends(
+            @PathVariable String addOrDeleteFriend,
+            @PathVariable Long userIdForWork,
+            @PathVariable String pageThatNeedToReturn,
+            Model model) {
+        myUserImpl.addOrDeleteFriends(addOrDeleteFriend, userIdForWork);
+        Iterable<MyUser> allUsers = myUserImpl.findAll();
         MyUser currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("users", users);
+        model.addAttribute("users", allUsers);
         return pageThatNeedToReturn;
     }
+
     @GetMapping("/friendPage/{userId}")
-    public String returnFriendPage(@PathVariable Long userId, Model model){
+    public String returnFriendPage(
+            @PathVariable Long userId, Model model){
         model.addAttribute("userWhomVisit", myUserImpl.findById(userId).get());
         model.addAttribute("currentUser", getCurrentUser());
         return "userWhomVisitPage";
     }
+
     @GetMapping("/ad/{whatNeedToDo}/{naming}/{userIdFromWhomWeTake}")
-    public String addOrDeleteMusicOrImageOrVideo(@PathVariable String whatNeedToDo,
-                                                 @PathVariable String naming,
-                                                 @PathVariable Long userIdFromWhomWeTake,
-                                                 Model model){
+    public String addOrDeleteMusicOrImageOrVideo(
+            @PathVariable String whatNeedToDo,
+            @PathVariable String naming,
+            @PathVariable Long userIdFromWhomWeTake,
+            Model model){
         myUserImpl.addOrDeleteImageOrMusicOrVideo(whatNeedToDo, naming);
         model.addAttribute("userWhomVisit", myUserImpl.findById(userIdFromWhomWeTake).get());
         model.addAttribute("currentUser", getCurrentUser());
         return "userWhomVisitPage";
     }
+
     @GetMapping("/findByName")
-    public String findByName(@RequestParam(name = "nameThatNeedFind") String name,
-                             Model model){
+    public String findByName(
+            @RequestParam(name = "nameThatNeedFind") String name,
+            Model model){
         model.addAttribute("usersThatFindByName", myUserImpl.findUsersByName(name));
         model.addAttribute("currentUser", getCurrentUser());
         return "findByName";
     }
+
     @GetMapping("/people")
     public String searchPeople(Model model){
-        Iterable<MyUser> users = myUserImpl.findAll();
+        Iterable<MyUser> allUsers = myUserImpl.findAll();
         MyUser currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
-        model.addAttribute("users", users);
+        model.addAttribute("users", allUsers);
         return "allPeople";
     }
 

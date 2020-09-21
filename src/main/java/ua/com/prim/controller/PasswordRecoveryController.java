@@ -20,6 +20,7 @@ public class PasswordRecoveryController {
     public String returnPage(){
         return "passwordRecovery";
     }
+
     @PostMapping("/passwordRecovery")
     public String passwordRecovery(
             @RequestParam(name = "emailThatNeedToRecovery") String emailThatNeedToRecovery,
@@ -31,6 +32,7 @@ public class PasswordRecoveryController {
         model.addAttribute("failSend",true);
         return "passwordRecovery";
     }
+
     @GetMapping("/passwordRecovery/{activationCode}")
     public String activationCode(
             @PathVariable String activationCode,
@@ -44,9 +46,10 @@ public class PasswordRecoveryController {
         return "passwordRecovery";
     }
     @PostMapping("/passwordRecovery/{userIdWhomNeedToChangePassword}")
-    public String changePassword(@PathVariable Long userIdWhomNeedToChangePassword,
-                                 @RequestParam("newPassword")String newPassword,
-                                 Model model){
+    public String changePassword(
+            @PathVariable Long userIdWhomNeedToChangePassword,
+            @RequestParam (name = "newPassword") String newPassword,
+            Model model){
         if(myUserImpl.changePassword(userIdWhomNeedToChangePassword, newPassword)){
             model.addAttribute("successChangePass", true);
             return "loginAndRegistration";

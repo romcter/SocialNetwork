@@ -65,7 +65,7 @@ public class MyUserImpl implements MyUserService {
     }
 
     @Override
-    public void addAndDeleteMusic(String actionThatNeedToDo, String musicNameForWork) {
+    public void addOrDeleteMusic(String actionThatNeedToDo, String musicNameForWork) {
         MyUser currentUser = getCurrentUser();
         if (actionThatNeedToDo.equals("add")) currentUser.getMusic().add(musicNameForWork);
         else currentUser.getMusic().remove(musicNameForWork);
@@ -73,7 +73,7 @@ public class MyUserImpl implements MyUserService {
     }
 
     @Override
-    public void addAndDeleteImage(String actionThatNeedToDo, String imageNameForWork) {
+    public void addOrDeleteImage(String actionThatNeedToDo, String imageNameForWork) {
         MyUser currentUser = getCurrentUser();
         if (actionThatNeedToDo.equals("add")) currentUser.getImages().add(imageNameForWork);
         else currentUser.getImages().remove(imageNameForWork);
@@ -81,7 +81,7 @@ public class MyUserImpl implements MyUserService {
     }
 
     @Override
-    public void addAndDeleteVideo(String actionThatNeedToDo, String videoNameForWork) {
+    public void addOrDeleteVideo(String actionThatNeedToDo, String videoNameForWork) {
         MyUser currentUser = getCurrentUser();
         if (actionThatNeedToDo.equals("add")) currentUser.getVideos().add(videoNameForWork);
         else currentUser.getVideos().remove(videoNameForWork);
@@ -89,10 +89,10 @@ public class MyUserImpl implements MyUserService {
     }
 
     @Override
-    public void addAndDeleteFriends(String whatNeedToDo, Long userIdForWork) {
+    public void addOrDeleteFriends(String addOrDeleteFriend, Long userIdForWork) {
         MyUser currentUser = getCurrentUser();
         Optional<MyUser> userWithWhomToWork = myUserRepository.findById(userIdForWork);
-        if (whatNeedToDo.equals("add")) {
+        if (addOrDeleteFriend.equals("add")) {
             currentUser.getFriends().add(userWithWhomToWork.get());
             userWithWhomToWork.get().getFriends().add(currentUser);
         } else {
@@ -129,6 +129,7 @@ public class MyUserImpl implements MyUserService {
     @Override
     public boolean changePassword(Long userIdWhomNeedToChangePassword, String newPassword) {
         MyUser currentUser = myUserRepository.findById(userIdWhomNeedToChangePassword).get();
+        if(currentUser == null) return false;
         currentUser.setPassword(passwordEncoder.encode(newPassword));
         myUserRepository.save(currentUser);
         return true;
@@ -146,13 +147,6 @@ public class MyUserImpl implements MyUserService {
                 currentUser.getEmail(),
                 futurePassword);
         mailSender.send(currentUser.getEmail(), "Activation code", message);
-        myUserRepository.save(currentUser);
-    }
-
-    @Override
-    public void deleteAccount(Long userId) {
-        MyUser currentUser = myUserRepository.findById(userId).get();
-        currentUser.setRole(MyUser.Role.DELETE);
         myUserRepository.save(currentUser);
     }
 
@@ -176,16 +170,18 @@ public class MyUserImpl implements MyUserService {
     }
 
     @Override
+    public void deleteAccount(Long userId) {
+        MyUser currentUser = myUserRepository.findById(userId).get();
+        currentUser.setRole(MyUser.Role.DELETE);
+        myUserRepository.save(currentUser);
+    }
+
+    @Override
     public void banOrUnban(Long userId, String actionThanNeedToDo) {
         MyUser userWhomWantToBanOrUnban = myUserRepository.findById(userId).get();
         if (actionThanNeedToDo.equals("banned")) userWhomWantToBanOrUnban.setRole(MyUser.Role.BANNED);
         else userWhomWantToBanOrUnban.setRole(MyUser.Role.USER);
         myUserRepository.save(userWhomWantToBanOrUnban);
-    }
-
-    @Override
-    public MyUser findByEmail(String email) {
-        return myUserRepository.findByEmail(email);
     }
 
     @Override

@@ -13,10 +13,10 @@ public interface MyUserService {
     void save(MyUser user);
     List<MyUser> findAll();
     Optional<MyUser> findById(Long id);
-    void addAndDeleteMusic(String actionThatNeedToDo, String musicNameForWork);
-    void addAndDeleteImage(String actionThatNeedToDo, String imageNameForWork);
-    void addAndDeleteVideo(String actionThatNeedToDo, String videoNameForWork);
-    void addAndDeleteFriends(String whatNeedToDo, Long userIdForWork);
+    void addOrDeleteMusic(String actionThatNeedToDo, String musicNameForWork);
+    void addOrDeleteImage(String actionThatNeedToDo, String imageNameForWork);
+    void addOrDeleteVideo(String actionThatNeedToDo, String videoNameForWork);
+    void addOrDeleteFriends(String whatNeedToDo, Long userIdForWork);
     boolean passwordRecovery(String emailThatNeedToRecovery);
     MyUser findByActivationCode(String activationCode);
     boolean changePassword(Long userIdWhomNeedToChangePassword, String newPassword);
@@ -25,7 +25,6 @@ public interface MyUserService {
     void changeEmailOrPassword(String email, String password);
     boolean accountRecovery(String emailForAccountRecovery);
     void banOrUnban(Long userId, String actionThanNeedToDo);
-    MyUser findByEmail(String email);
     void addOrDeleteImageOrMusicOrVideo(String whatNeedToDo, String naming);
     Iterable<MyUser> findUsersByName(String name);
 }

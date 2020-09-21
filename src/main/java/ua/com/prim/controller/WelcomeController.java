@@ -35,7 +35,7 @@ public class WelcomeController {
             @PathVariable(value = "musicName", required = false, name = "musicName") String musicNameForWork,
             @PathVariable(value = "pageThatNeedToReturn", required = false, name = "pageThatNeedToReturn") String pageThatNeedToReturn,
             Model model) {
-        myUserImpl.addAndDeleteMusic(actionThatNeedToDo, musicNameForWork);
+        myUserImpl.addOrDeleteMusic(actionThatNeedToDo, musicNameForWork);
         MyUser currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
         return pageThatNeedToReturn;
@@ -52,7 +52,7 @@ public class WelcomeController {
             @PathVariable(value = "imageName", required = false, name = "imageName") String imageNameForWork,
             @PathVariable(value = "pageThatNeedToReturn", required = false, name = "pageThatNeedToReturn") String pageThatNeedToReturn,
             Model model) {
-        myUserImpl.addAndDeleteImage(actionThatNeedToDo, imageNameForWork);
+        myUserImpl.addOrDeleteImage(actionThatNeedToDo, imageNameForWork);
         MyUser currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
         return pageThatNeedToReturn;
@@ -69,7 +69,7 @@ public class WelcomeController {
             @PathVariable(value = "videoName", required = false, name = "videoName") String videoNameForWork,
             @PathVariable(value = "pageThatNeedToReturn", required = false, name = "pageThatNeedToReturn") String pageThatNeedToReturn,
             Model model) {
-        myUserImpl.addAndDeleteVideo(actionThatNeedToDo, videoNameForWork);
+        myUserImpl.addOrDeleteVideo(actionThatNeedToDo, videoNameForWork);
         MyUser currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
         return pageThatNeedToReturn;
