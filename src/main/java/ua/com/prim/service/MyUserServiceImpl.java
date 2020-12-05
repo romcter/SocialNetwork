@@ -1,4 +1,4 @@
-package ua.com.prim.servise;
+package ua.com.prim.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,7 +15,7 @@ import java.util.UUID;
 
 
 @Service
-public class MyUserImpl implements MyUserService {
+public class MyUserServiceImpl implements MyUserService {
 
     @Autowired
     private MyUserRepository myUserRepository;

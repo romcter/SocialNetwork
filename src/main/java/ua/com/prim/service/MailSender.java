@@ -1,4 +1,4 @@
-package ua.com.prim.servise;
+package ua.com.prim.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

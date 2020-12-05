@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.prim.dto.MyUserDto;
 import ua.com.prim.entity.MyUser;
-import ua.com.prim.servise.MyUserImpl;
+import ua.com.prim.service.MyUserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
@@ -18,7 +18,7 @@ import java.util.Date;
 public class LoginAndRegistrationController {
 
     @Autowired
-    private MyUserImpl myUserImpl;
+    private MyUserServiceImpl myUserServiceImpl;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -36,7 +36,7 @@ public class LoginAndRegistrationController {
             @RequestParam(name = "name") String name,
             @RequestParam(name = "email") String email,
             Model model) {
-        if (myUserImpl.existsByEmail(email)) {
+        if (myUserServiceImpl.existsByEmail(email)) {
             model.addAttribute("emailEr", true);
             return "loginAndRegistration";
         }
@@ -48,7 +48,7 @@ public class LoginAndRegistrationController {
         userDto.setPassword(pass);
         userDto.setRole(MyUser.Role.USER);
         userDto.setState(MyUser.State.ACTIVE);
-        myUserImpl.addMyUser(userDto);
+        myUserServiceImpl.addMyUser(userDto);
         return "loginAndRegistration";
     }
 }

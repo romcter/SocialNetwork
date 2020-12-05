@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.prim.entity.MyUser;
-import ua.com.prim.servise.MyUserImpl;
+import ua.com.prim.service.MyUserServiceImpl;
 
 @Controller
 public class SettingsUserController {
 
     @Autowired
-    private MyUserImpl myUserImpl;
+    private MyUserServiceImpl myUserServiceImpl;
 
 
     @GetMapping("/settingUser")
@@ -34,7 +34,7 @@ public class SettingsUserController {
             model.addAttribute("validEmail", true);
             return "settingUser";
         }
-        myUserImpl.changeEmailOrPassword(newEmail, newPass);
+        myUserServiceImpl.changeEmailOrPassword(newEmail, newPass);
         model.addAttribute("currentUser", getCurrentUser());
         model.addAttribute("successChange", true);
         return "settingUser";
@@ -42,7 +42,7 @@ public class SettingsUserController {
 
     @GetMapping("/deleteAccount/{userId}")
     public String deleteUserAccount(@PathVariable Long userId){
-        myUserImpl.deleteAccount(userId);
+        myUserServiceImpl.deleteAccount(userId);
         return "redirect:/login";
     }
 
@@ -54,7 +54,7 @@ public class SettingsUserController {
     @PostMapping("/activateAccount")
     public String activateAccountByEmail(@RequestParam(name = "emailForAccountRecovery")String emailForAccountRecovery,
                                          Model model){
-        if(myUserImpl.accountRecovery(emailForAccountRecovery)){
+        if(myUserServiceImpl.accountRecovery(emailForAccountRecovery)){
             model.addAttribute("successActivate", true);
             return "loginAndRegistration";
         }model.addAttribute("failActivate", true);
@@ -64,6 +64,6 @@ public class SettingsUserController {
     private MyUser getCurrentUser(){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
-        return myUserImpl.findByLogin(username);
+        return myUserServiceImpl.findByLogin(username);
     }
 }

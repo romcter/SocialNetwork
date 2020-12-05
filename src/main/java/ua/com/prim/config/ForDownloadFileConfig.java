@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
-public class MvsConfig implements WebMvcConfigurer {
+public class ForDownloadFileConfig implements WebMvcConfigurer {
 
     @Value("${upload.path}")
     private String uploadPath;

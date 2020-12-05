@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.prim.entity.MyUser;
-import ua.com.prim.servise.MyUserImpl;
+import ua.com.prim.service.MyUserServiceImpl;
 
 @Controller
 public class FriendController {
 
     @Autowired
-    private MyUserImpl myUserImpl;
+    private MyUserServiceImpl myUserServiceImpl;
 
 
     @GetMapping("/friends")
@@ -31,8 +31,8 @@ public class FriendController {
             @PathVariable Long userIdForWork,
             @PathVariable String pageThatNeedToReturn,
             Model model) {
-        myUserImpl.addOrDeleteFriends(addOrDeleteFriend, userIdForWork);
-        Iterable<MyUser> allUsers = myUserImpl.findAll();
+        myUserServiceImpl.addOrDeleteFriends(addOrDeleteFriend, userIdForWork);
+        Iterable<MyUser> allUsers = myUserServiceImpl.findAll();
         MyUser currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("users", allUsers);
@@ -42,7 +42,7 @@ public class FriendController {
     @GetMapping("/friendPage/{userId}")
     public String returnFriendPage(
             @PathVariable Long userId, Model model){
-        model.addAttribute("userWhomVisit", myUserImpl.findById(userId).get());
+        model.addAttribute("userWhomVisit", myUserServiceImpl.findById(userId).get());
         model.addAttribute("currentUser", getCurrentUser());
         return "userWhomVisitPage";
     }
@@ -53,8 +53,8 @@ public class FriendController {
             @PathVariable String naming,
             @PathVariable Long userIdFromWhomWeTake,
             Model model){
-        myUserImpl.addOrDeleteImageOrMusicOrVideo(whatNeedToDo, naming);
-        model.addAttribute("userWhomVisit", myUserImpl.findById(userIdFromWhomWeTake).get());
+        myUserServiceImpl.addOrDeleteImageOrMusicOrVideo(whatNeedToDo, naming);
+        model.addAttribute("userWhomVisit", myUserServiceImpl.findById(userIdFromWhomWeTake).get());
         model.addAttribute("currentUser", getCurrentUser());
         return "userWhomVisitPage";
     }
@@ -63,14 +63,14 @@ public class FriendController {
     public String findByName(
             @RequestParam(name = "nameThatNeedFind") String name,
             Model model){
-        model.addAttribute("usersThatFindByName", myUserImpl.findUsersByName(name));
+        model.addAttribute("usersThatFindByName", myUserServiceImpl.findUsersByName(name));
         model.addAttribute("currentUser", getCurrentUser());
         return "findByName";
     }
 
     @GetMapping("/people")
     public String searchPeople(Model model){
-        Iterable<MyUser> allUsers = myUserImpl.findAll();
+        Iterable<MyUser> allUsers = myUserServiceImpl.findAll();
         MyUser currentUser = getCurrentUser();
         model.addAttribute("currentUser", currentUser);
         model.addAttribute("users", allUsers);
@@ -80,6 +80,6 @@ public class FriendController {
 
     private MyUser getCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return myUserImpl.findByLogin(user.getUsername());
+        return myUserServiceImpl.findByLogin(user.getUsername());
     }
 }

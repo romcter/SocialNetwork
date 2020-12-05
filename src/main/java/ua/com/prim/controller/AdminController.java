@@ -8,33 +8,33 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ua.com.prim.entity.MyUser;
-import ua.com.prim.servise.MyUserImpl;
+import ua.com.prim.service.MyUserServiceImpl;
 
 @Controller
 public class AdminController {
 
     @Autowired
-    private MyUserImpl myUserImpl;
+    private MyUserServiceImpl myUserServiceImpl;
 
     @GetMapping("/admin")
     public String returnAdminPage(Model model){
         model.addAttribute("currentUser", getCurrentUser());
-        model.addAttribute("allUser", myUserImpl.findAll());
+        model.addAttribute("allUser", myUserServiceImpl.findAll());
         return "admin";
     }
     @GetMapping("/admin/{banOrUnban}/{userId}")
     public String banOrUnban(@PathVariable("banOrUnban") String actionThanNeedToDo,
                              @PathVariable Long userId,
                              Model model){
-        myUserImpl.banOrUnban(userId, actionThanNeedToDo);
+        myUserServiceImpl.banOrUnban(userId, actionThanNeedToDo);
         model.addAttribute("currentUser", getCurrentUser());
-        model.addAttribute("allUser", myUserImpl.findAll());
+        model.addAttribute("allUser", myUserServiceImpl.findAll());
         return "admin";
     }
 
     private MyUser getCurrentUser(){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
-        return myUserImpl.findByLogin(username);
+        return myUserServiceImpl.findByLogin(username);
     }
 }

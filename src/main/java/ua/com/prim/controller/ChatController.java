@@ -12,13 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import ua.com.prim.entity.MyUser;
 import ua.com.prim.entity.ChatMessage;
-import ua.com.prim.servise.MyUserImpl;
+import ua.com.prim.service.MyUserServiceImpl;
 
 @Controller
 public class ChatController {
 
     @Autowired
-    private MyUserImpl myUserImpl;
+    private MyUserServiceImpl myUserServiceImpl;
 
     @RequestMapping("/chat")
     public String index(Model model) {
@@ -42,7 +42,7 @@ public class ChatController {
     private MyUser getCurrentUser(){
         Authentication loggedInUser = SecurityContextHolder.getContext().getAuthentication();
         String username = loggedInUser.getName();
-        return myUserImpl.findByLogin(username);
+        return myUserServiceImpl.findByLogin(username);
     }
 
 }

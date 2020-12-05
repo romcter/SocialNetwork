@@ -1,4 +1,4 @@
-package ua.com.prim.config;
+package ua.com.prim.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -20,18 +20,21 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private UserDetailsService userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final AuthenticationSuccessHandler authenticationSuccessHandler;
+
+    private final DataSource dataSource;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private AuthenticationSuccessHandler authenticationSuccessHandler;
-
-    @Qualifier("dataSource")
-    @Autowired
-    private DataSource dataSource;
+    public SecurityConfig(UserDetailsService userDetailsService, PasswordEncoder passwordEncoder, AuthenticationSuccessHandler authenticationSuccessHandler, @Qualifier("dataSource") DataSource dataSource) {
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationSuccessHandler = authenticationSuccessHandler;
+        this.dataSource = dataSource;
+    }
 
     @Autowired
     public void registerGlobalAuthentication(AuthenticationManagerBuilder auth) throws Exception {

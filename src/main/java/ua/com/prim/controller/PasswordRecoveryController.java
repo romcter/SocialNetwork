@@ -8,13 +8,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ua.com.prim.entity.MyUser;
-import ua.com.prim.servise.MyUserImpl;
+import ua.com.prim.service.MyUserServiceImpl;
 
 @Controller
 public class PasswordRecoveryController {
 
     @Autowired
-    private MyUserImpl myUserImpl;
+    private MyUserServiceImpl myUserServiceImpl;
 
     @GetMapping("/passwordRecovery")
     public String returnPage(){
@@ -25,7 +25,7 @@ public class PasswordRecoveryController {
     public String passwordRecovery(
             @RequestParam(name = "emailThatNeedToRecovery") String emailThatNeedToRecovery,
             Model model){
-        if(myUserImpl.passwordRecovery(emailThatNeedToRecovery)){
+        if(myUserServiceImpl.passwordRecovery(emailThatNeedToRecovery)){
             model.addAttribute("successfulRecovery",true);
             return "loginAndRegistration";
         }
@@ -37,7 +37,7 @@ public class PasswordRecoveryController {
     public String activationCode(
             @PathVariable String activationCode,
             Model model){
-        MyUser currentUser = myUserImpl.findByActivationCode(activationCode);
+        MyUser currentUser = myUserServiceImpl.findByActivationCode(activationCode);
         if(currentUser.getActivationCode().equals(activationCode)){
             model.addAttribute("currentUser", currentUser);
             return "changePassword";
@@ -50,7 +50,7 @@ public class PasswordRecoveryController {
             @PathVariable Long userIdWhomNeedToChangePassword,
             @RequestParam (name = "newPassword") String newPassword,
             Model model){
-        if(myUserImpl.changePassword(userIdWhomNeedToChangePassword, newPassword)){
+        if(myUserServiceImpl.changePassword(userIdWhomNeedToChangePassword, newPassword)){
             model.addAttribute("successChangePass", true);
             return "loginAndRegistration";
         }model.addAttribute("failChangePass", true);

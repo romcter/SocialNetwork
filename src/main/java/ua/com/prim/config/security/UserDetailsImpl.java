@@ -1,4 +1,4 @@
-package ua.com.prim.config;
+package ua.com.prim.config.security;
 
 
 import org.springframework.beans.factory.annotation.Autowired;

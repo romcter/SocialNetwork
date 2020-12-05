@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.com.prim.entity.MyUser;
-import ua.com.prim.servise.MyUserImpl;
+import ua.com.prim.service.MyUserServiceImpl;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedOutputStream;
@@ -22,7 +22,7 @@ import java.util.UUID;
 public class UploadAndDownloadController {
 
     @Autowired
-    private MyUserImpl myUserImpl;
+    private MyUserServiceImpl myUserServiceImpl;
 
     @Value("${upload.path}")
     private String uploadPath;
@@ -44,7 +44,7 @@ public class UploadAndDownloadController {
                 if (type.equals("video")) currentUser.getVideos().add(resultFileName);
                 if (type.equals("image")) currentUser.getImages().add(resultFileName);
                 if (type.equals("mainPage") || type.equals("settingUser")) currentUser.setMainPhoto("/img/" + resultFileName);
-                myUserImpl.save(currentUser);
+                myUserServiceImpl.save(currentUser);
             } catch (IOException e) {
                 model.addAttribute("haveFile", true);
                 e.printStackTrace();
@@ -87,6 +87,6 @@ public class UploadAndDownloadController {
 
     private MyUser getCurrentUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return myUserImpl.findByLogin(user.getUsername());
+        return myUserServiceImpl.findByLogin(user.getUsername());
     }
 }

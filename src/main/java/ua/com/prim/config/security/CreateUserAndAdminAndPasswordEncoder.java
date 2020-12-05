@@ -1,4 +1,4 @@
-package ua.com.prim.config;
+package ua.com.prim.config.security;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,7 @@ import java.util.Date;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class AppConfig extends GlobalMethodSecurityConfiguration {
+public class CreateUserAndAdminAndPasswordEncoder extends GlobalMethodSecurityConfiguration {
 
     private static final String ADMIN = "admin";
     private static final String USER = "user";

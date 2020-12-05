@@ -1,4 +1,4 @@
-package ua.com.prim.servise;
+package ua.com.prim.service;
 
 import ua.com.prim.dto.MyUserDto;
 import ua.com.prim.entity.MyUser;

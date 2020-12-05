@@ -1,4 +1,4 @@
-package ua.com.prim.servise;
+package ua.com.prim.service;
 
 import java.util.ArrayList;
 import java.util.List;
